@@ -89,8 +89,8 @@ public class MyRectangle2D {
 
 
 
-//yy ans:
-class MyRectangle2D{
+    //yy ans:
+    public class MyRectangle2D{
         //datafield x,y(center),height,width
         double x=0,y=0,width=1,height=1;
         //constructor (0,0) w 1 h1
@@ -153,9 +153,7 @@ class MyRectangle2D{
         }
         boolean overlapRec(MyRectangle2D r){
             boolean ans=false;
-            if(RecInRec(r)==true){
-                ans=false;}
-            else{
+            
 
                 double x1,y1,width1,height1;
                 x1=r.getX();
@@ -177,10 +175,10 @@ class MyRectangle2D{
                 
                 
                 if(PointInRec(p1x,p1y)==true||PointInRec(p2x,p2y)==true||PointInRec(p3x,p3y)==true||PointInRec(p4x,p4y)==true){
-                    ans=true;
-                }
+                    if(PointInRec(p1x,p1y)==true&&PointInRec(p2x,p2y)==true&&PointInRec(p3x,p3y)==true&&PointInRec(p4x,p4y)==true){ans=false;}
+                    else{ans=true;}
 
-            }
+                }
             return ans;
         }
     }
