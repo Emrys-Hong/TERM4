@@ -14,3 +14,10 @@ public class IteratingExamples {
         return sum;
     }
 }
+
+// YY:parts that are diff
+// Iterator itr=integers.iterator();
+//         while (itr.hasNext()) {
+            
+//             sum+=(int)itr.next();
+//         }
