@@ -15,3 +15,21 @@ public class PrimeNumberChecker{
 	}
 }
 
+
+//yy asw:
+public class PrimeNumberChecker{
+    //prime only divisible by 1 and itself
+    //assusme all input>=3
+	public static int isPrime(int num){
+        int ans=0;
+        for(int i=2;i<num;i++){
+            if(num%i==0){
+                ans= 0;
+            }
+            else{ans=1;} }
+        return ans;
+
+
+	}
+}
+
