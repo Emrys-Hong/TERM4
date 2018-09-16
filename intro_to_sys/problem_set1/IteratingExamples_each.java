@@ -15,4 +15,10 @@ public class IteratingExamples {
           return sum;
       }
 }
-
+// yy ans:
+//  int sum=0;
+//         int a=integers.size();
+//         for(int i=0;i<a;i++){
+//             sum+=integers.get(i);
+//         }
+//         return sum;
