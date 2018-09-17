@@ -77,8 +77,8 @@ public class MyRectangle2D {
     }
 
     boolean overlaps(MyRectangle2D r) {
-        if (( (r.x+r.width/2>=x-width/2)| (r.x-r.width/2>=x+width/2)) &&
-                ((r.y+r.height/2>=y-height/2)) | (r.y-r.height/2<=y+height/2)) {
+        if (( (r.x+r.width/2>=x-width/2) && (r.x-r.width/2>=x+width/2)) |
+                ((r.y+r.height/2>=y-height/2)) && (r.y-r.height/2<=y+height/2)) {
             return true;
         } else {
             return false;
