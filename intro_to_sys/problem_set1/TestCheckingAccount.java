@@ -13,7 +13,7 @@ class CheckingAccount extends Account{
         }else{setbalance(current);}
         }
     }        
-public class TestAccount {
+public class TestCheckingAccount {
 
 	public static void main(String[] args) {
 
