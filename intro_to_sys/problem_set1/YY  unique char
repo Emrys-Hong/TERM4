@@ -6,7 +6,7 @@ class equ{
         int b=sIn.length();
       
         for (int j=0;j<b;j++){
-            for(int i=1;i<sIn.length();i++){           
+            for(int i=j+1;i<sIn.length();i++){           
                 if(sIn2[0]==sIn2[i]){
                     a=false;break;
                 }
