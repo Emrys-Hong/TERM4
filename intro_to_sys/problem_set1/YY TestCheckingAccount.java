@@ -1,18 +1,16 @@
 import java.util.Date;
 class CheckingAccount extends Account{
    
-    CheckingAccount(int id,double balance){
-        this.id=id;
-        this.balance=balance;
-    };
-    void withdraw(double amount){
+    CheckingAccount(int newid, double newbal){
+       setBalance(newbal);setId(newid);}
+    public void withdraw(double amount){
         double current=getBalance()-amount;
         if(current<-5000){
             System.out.println("over limit");
             
-        }else{setbalance(current);}
+        }else{setBalance(current);}
         }
-    }        
+    }   
 public class TestCheckingAccount {
 
 	public static void main(String[] args) {
