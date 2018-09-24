@@ -6,7 +6,13 @@
 
 import java.util.Date;
 
-public class Account {
+// ATTENTION 
+// just edit this file
+// TestAccount.java contains the test cases provided in the problem set 
+// Put in any import statements that you need 
+
+
+public class Account{
 
     private int id = 0;
     private double balance = 0;
@@ -55,8 +61,8 @@ public class Account {
     }
 
     // get interest rate
-    public double getMonthlyInterestRate() {
-        return this.annualInterestRate/12;
+    public static double getMonthlyInterestRate() {
+        return Account.annualInterestRate/12;
     }
 
     // get monthly interest
@@ -75,10 +81,7 @@ public class Account {
     }
 }
 
-
 // yy ans:
-
-import java.util.Date;
 
 public class Account{
      //data field

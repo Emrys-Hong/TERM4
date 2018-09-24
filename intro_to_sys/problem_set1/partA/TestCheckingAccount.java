@@ -36,54 +36,74 @@ public class TestCheckingAccount {
 
 class Account{
      
-      int id=0;
-      double balance=0;
-      static double annualInterestRate=0;
-      Date dateCreated=new Date();
+    int id=0;
+    double balance=0;
+    static double annualInterestRate=0;
+    Date dateCreated=new Date();
      
     //constructorwith no arg and with arg
-     Account(){
-     }
-     Account(int newid,double newbal){
-         id=newid;
-         balance=newbal;
-     }
+    Account(){
+    }
+    Account(int newid,double newbal){
+        id=newid;
+        balance=newbal;
+    }
   
         //accessor:getter;mutator:setter ofr id balance,annual insterest
-     void setid(int newid){
-         id=newid;
-     }   
-     int getid(){
-         return id;
-     }
-     void setbalance(double newbal){
-         balance=newbal;
-     }
-     double getBalance(){
+    void setid(int newid){
+        id=newid;
+    }   
+    int getid(){
+        return id;
+    }
+    void setbalance(double newbal){
+        balance=newbal;
+    }
+    double getBalance(){
         return balance;
     }
-     Date getdateCreated(){
-         return dateCreated;
-     } 
-     static void setAnnualInterestRate(double newannualInterestRate){
+    Date getdateCreated(){
+        return dateCreated;
+    } 
+    static void setAnnualInterestRate(double newannualInterestRate){
         annualInterestRate=newannualInterestRate;
     }
     static double getAnnualInterestRate(){
         return annualInterestRate;
     }
-     //method
+    //method
      
-     double getMonthlyInterestRate(){
-         return annualInterestRate/12;
+    double getMonthlyInterestRate(){
+        return annualInterestRate/12;
 
-     }
-     double getMonthlyInterest(){
-         return balance*getMonthlyInterestRate()*0.01;
-     }
-     void withdraw(double amount){
-         balance-=amount;
-     }
-     void deposit(double amount){
-         balance+=amount;
-     }
+    }
+    double getMonthlyInterest(){
+        return balance*getMonthlyInterestRate()*0.01;
+    }
+    void withdraw(double amount){
+        balance-=amount;
+    }
+    void deposit(double amount){
+        balance+=amount;
+    }
+}
+
+/**
+ * Pengfei method
+ */
+public class CheckingAccount extends Account {
+
+    // dont forget to add this checking account
+    CheckingAccount(int newid, double newbal){
+        setBalance(newbal);
+        setId(newid);
+    }
+
+    public void withdraw(double money) {
+        if (this.getBalance()-money < -5000) {
+            System.out.print("over limit");
+        } else {
+            this.setBalance(this.getBalance()-money);
+        }
+    }
 }

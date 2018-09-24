@@ -59,7 +59,7 @@ public class MyRectangle2D {
         return width*2 + height*2;
     }
 
-    boolean contains(int x1, int y1) {
+    boolean contains(double x1, double y1) {
         if ((x1<=x+width/2 && x1>=x-width/2) && (y1<=y+height/2 && y1>=y-height/2)) {
             return true;
         } else {
@@ -68,8 +68,8 @@ public class MyRectangle2D {
     }
 
     boolean contains(MyRectangle2D r) {
-        if ( ((r.x-r.width/2 >= x-width/2) && (r.y-r.height/2 <= y-height/2))
-                && ((r.x+r.width/2 <= x+width/2) && (r.y+r.height/2 <= y+height/2)) ){
+        if ( ((r.x-r.width/2 >= x-width/2) && (r.y+r.height/2 <= y+height/2))
+                && ((r.x+r.width/2 <= x+width/2) && (r.y-r.height/2 >= y-height/2)) ){
             return true;
         } else {
             return false;
@@ -77,15 +77,14 @@ public class MyRectangle2D {
     }
 
     boolean overlaps(MyRectangle2D r) {
-        if (( (r.x+r.width/2>=x-width/2) && (r.x-r.width/2>=x+width/2)) |
-                ((r.y+r.height/2>=y-height/2)) && (r.y-r.height/2<=y+height/2)) {
+        if ( ((r.x+r.width/2>=x-width/2) || (r.x-r.width/2<=x+width/2)) &&
+                ((r.y+r.height/2>=y-height/2) || (r.y-r.height/2<=y+height/2)) ) {
             return true;
         } else {
             return false;
         }
     }
 }
-
 
 
 

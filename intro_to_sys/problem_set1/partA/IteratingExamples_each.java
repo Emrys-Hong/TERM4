@@ -15,10 +15,17 @@ public class IteratingExamples {
           return sum;
       }
 }
-// yy ans:
-//  int sum=0;
-//         int a=integers.size();
-//         for(int i=0;i<a;i++){
-//             sum+=integers.get(i);
-//         }
-//         return sum;
+
+/**
+ * yy ans:
+ */
+public class IteratingExamples1 {
+    public static int Act2ForEach(List<Integer> integers) {
+        int sum=0;
+        int a=integers.size();
+        for(int i=0;i<a;i++){
+            sum+=integers.get(i);
+        }
+        return sum;
+    }
+}
