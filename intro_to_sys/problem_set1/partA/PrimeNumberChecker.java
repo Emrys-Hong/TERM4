@@ -24,7 +24,7 @@ public class PrimeNumberChecker{
         int ans=0;
         for(int i=2;i<num;i++){
             if(num%i==0){
-                ans= 0;
+                return ans= 0;
             }
             else{ans=1;} }
         return ans;
