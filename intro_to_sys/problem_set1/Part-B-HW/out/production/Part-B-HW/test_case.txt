@@ -1,0 +1,64 @@
+
+1a. powerMod(int a, int b, int m) 
+
+input: a = 2, b = 3, m = 2
+expected output: 0
+
+input: a = 2, b = 3, m = 3
+expected output: 2
+
+1b. computePiInHex(int precision)
+
+input: 2
+expected output: 2, 4
+
+input: 5
+expected output: 2, 4, 3, 15, 6
+
+input: 10
+expected output: 2, 4, 3, 15, 6, 10, 8, 8, 8, 5
+
+2. convertBase(int[] digits, int baseA, int baseB, int precisionB)
+
+input: digits = [2, 4, 3, 15, 6], baseA = 16, baseB = 26, precisionB = 5
+expected output: [3, 17, 18, 16, 4]
+
+input: digits = [2, 4, 3, 15, 6, 10, 8, 8], baseA = 16, baseB = 26, precisionB = 8
+expected output: [3, 17, 18, 16, 11, 14, 10, 25]
+
+3. convertDigitsToString(int[] digits, int base, char[] alphabet)
+
+input: digits = [3, 17, 18, 16, 4], baseA = 26, alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
+expected output: drsqe
+
+input: digits = [3, 17, 18, 16, 11, 14, 10, 25], baseA = 26, alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
+expected output: drsqlokz
+
+4. Run Main.java file with PI_PRECISION=50
+
+expected output: 
+	Substring 'a' found at index 43: ...vqqanhm...
+	Substring 'rod' found at index 10: ...yrtrodnlh...
+	Substring 'i' found at index 27: ...gtuirxn...
+Word coverage using basic alphabet: 0.003529
+
+
+5. Run Main.java file with PI_PRECISION=50
+
+Frequency dictionary generated: [a, a, a, a, a, a, a, a, b, b, c, c, c, c, d, d, d...
+Digits of Pi translated into a-z: ddtohtsgileiigsleterpiurcnewlklsbkoosteunnelautpde
+	Substring 'a' found at index 44: ...nelautp...
+	Substring 'new' found at index 25: ...urcnewlkl...
+	Substring 'i' found at index 8: ...tsgilei...
+	Substring 'let' found at index 15: ...igsleterp...
+	Substring 'to' found at index 2: ddtohts...
+Word coverage using frequency alphabet: 0.005882
+
+
+
+
+
+
+
+
+
