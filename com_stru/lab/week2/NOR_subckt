@@ -1,0 +1,14 @@
+.subckt NOR a b z
+// NAND is not correct
+NAND a b m
+
+// pull up
+MPU1 z m vdd vdd PENH sw=4 sl=1
+MPU2 k b vdd vdd PENH sw=4 sl=1
+MPU1 z a k vdd PENH sw=4 sl=1
+
+// pull down 
+MPD1 z m q 0 NENH sw=2 sl=1
+MPD2 q b 0 0 NENH sw=2 sl=1
+MPD3 q a 0 0 NENH sw=2 sl=1
+.ends

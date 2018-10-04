@@ -1,0 +1,10 @@
+.include "/Users/emrys/Desktop/50002/nominal.jsim"
+.include "/Users/emrys/Desktop/50002/8clocks.jsim"
+.include "/Users/emrys/Desktop/50002/gates"
+
+
+Xtest clk1 clk2 z xor
+.tran 20ns // stands for how long it last
+.plot clk1
+.plot clk2
+.plot z

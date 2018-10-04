@@ -1,0 +1,25 @@
+.include "/Users/emrys/Desktop/50002/nominal.jsim"
+.include "/Users/emrys/Desktop/50002/lab2checkoff.jsim"
+.include "/Users/emrys/Desktop/50002/gates"
+
+.subckt FA a b ci s co
+// sum
+Xsum1 a b  n xor
+Xsum2 n ci s xor
+// carry
+Xnand1 a b  ab nand
+Xnand2 a ci ac nand
+Xnand3 b ci bc nand
+Xnand4 ab ac bc co nand3
+.ends
+
+
+
+.subckt ADDER4 a3 a2 a1 a0 b3 b2 b1 b0 s4 s3 s2 s1 s0
+* remember node "0" is ground node
+* nodes c0 to c3 are internal adder nodes
+Xbit0 a0 b0 0  s0 c0 FA
+Xbit1 a1 b1 c0 s1 c1 FA
+Xbit2 a2 b2 c1 s2 c2 FA
+Xbit3 a3 b3 c2 s3 s4 FA
+.ends

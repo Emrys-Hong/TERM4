@@ -1,0 +1,62 @@
+// capital letter and small capital letter are the same
+
+* INVERTER: input is A, output is Z 
+.subckt inv a z
+MPD1 z a 0 0 NENH sw=16 sl=1 
+MPU1 z a vdd vdd PENH sw=16 sl=1 
+.ends
+
+* 2-input NAND: inputs are A and B, output is Z 
+.subckt nand a b z 
+MPD1 z a 1 0 NENH sw=8 sl=1 
+MPD2 1 b 0 0 NENH sw=8 sl=1
+MPU1 z a vdd vdd PENH sw=10 sl=1
+MPU2 z b vdd vdd PENH sw=10 sl=1
+.ends
+
+* 2-input AND: inputs are A and B, output is Z
+.subckt and a b z
+Xnand a b k nand
+Xinv k z inv
+.ends
+
+* 2-input nor: inputs are A and B, output is Z
+.subckt nor a b z
+MPU1 m a vdd vdd PENH sw=10 sl=1
+MPU2 z b m vdd PENH sw=10 sl=1
+MPD1 z a 0 0 NENH sw=8 sl=1 
+MPD2 z b 0 0 NENH sw=8 sl=1
+.ends
+
+
+* 2-input xor: inputs are A and B, output is Z
+.subckt xor A B Z
+Xnor A B P nor
+MPU1 n A vdd vdd PENH sw=4 sl=1
+MPU2 Z P n   vdd PENH sw=4 sl=1
+MPU3 n B vdd vdd PENH sw=4 sl=1
+MPD1 Z A m   0   NENH sw=2 sl=1
+MPD2 m B 0   0   NENH sw=2 sl=1
+MPD3 Z P 0   0   NENH sw=2 sl=1
+.ends
+
+* 2-input xnor: inputs are A and B, output is Z
+.subckt xnor a b z
+Xnand A B m nand
+MPU1 z m vdd vdd PENH sw=10 sl=1
+MPU2 k b vdd vdd PENH sw=10 sl=1
+MPU3 z a k vdd PENH sw=10 sl=1
+MPD1 z m q 0 NENH sw=8 sl=1
+MPD2 q b 0 0 NENH sw=8 sl=1
+MPD3 q a 0 0 NENH sw=8 sl=1
+.ends
+
+* 3-input and gate: inputs are A B and C, output is Z
+.subckt nand3 A B C Z
+MPU1 Z A vdd vdd PENH sw=10 sl=1
+MPU2 Z B vdd vdd PENH sw=10 sl=1
+MPU3 Z C vdd vdd PENH sw=10 sl=1
+MPD1 Z A k   0   NENH sw=8  sl=1
+MPD2 k B m   0   NENH sw=8  sl=1
+MPD3 m C 0   0   NENH sw=8  sl=1
+.ends

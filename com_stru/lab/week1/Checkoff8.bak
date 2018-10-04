@@ -1,0 +1,25 @@
+.include "/Users/emrys/Desktop/50002/nominal.jsim"
+.include "/Users/emrys/Desktop/50002/lab1checkoff.jsim"
+
+* INVERTER: input is A, output is Z
+.subckt inv a z
+MPD1 z a 0 0 NENH sw=16 sl=1
+MPU1 z a vdd vdd PENH sw=16 sl=1
+.ends
+
+.subckt F A B C Z
+// pull down
+MPD1 m A k k NENH sw=8 sl=1
+MPD2 k B 0 0 NENH sw=8 sl=1
+MPD3 m C 0 0 NENH sw=8 sl=1
+
+// pull up
+MPU1 q A vdd vdd PENH sw=8 sl=1
+MPU2 m B q q PENH sw=8 sl=1
+MPU3 m C vdd vdd PENH sw=8 sl=1
+
+// inverse
+MPU11 Z m 0 0 NENH sw=16 sl=1
+MPU22 Z m vdd vdd PENH sw=16 sl=1
+.ends
+
