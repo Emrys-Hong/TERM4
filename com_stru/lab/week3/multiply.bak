@@ -2,15 +2,7 @@
 .include "../50002/stdcell.jsim"
 .include "../50002/lab3multiply.jsim"
 
-// full adder
-.subckt fulladder a b ci s co
-Xsum1 a b  n xor2
-Xsum2 n ci s xor2
-Xnand1 a b  ab nand2
-Xnand2 a ci ac nand2
-Xnand3 b ci bc nand2
-Xnand4 ab ac bc co nand3
-.ends
+
 
 // full adder for multiply
 .subckt FA a b ain cin s co
@@ -19,45 +11,44 @@ Xfa  ain bin cin s co fulladder
 .ends
 
 //multiply32 bit
-.subckt alu ALUFN[5:0] A[31:0] B[31:0] alu[31:0] z v n
+.subckt multiply A[31:0] B[31:0] alu[31:0]
 //the first row
 Xand1 A[31:0] B0#32  P[31:0] and2
 
 Xbuf0 P0      alu[0] buffer
 
 // a cascade of buffer
-Xadder1    A[30:0]   B1#31  P[31:1]  0  C1[29:0]    P1[31:1]    C1[31:1]    FA
-Xadder2    A[29:0]   B2#30  P1[31:2]  0  C2[29:1]    P2[31:2]    C2[31:2]    FA
-Xadder3    A[28:0]   B3#29  P2[31:3]  0  C3[29:2]    P3[31:3]    C3[31:3]    FA
-Xadder4    A[27:0]   B4#28  P3[31:4]  0  C4[29:3]    P4[31:4]    C4[31:4]    FA
-Xadder5    A[26:0]   B5#27  P4[31:5]  0  C5[29:4]    P5[31:5]    C5[31:5]    FA
-Xadder6    A[25:0]   B6#26  P5[31:6]  0  C6[29:5]    P6[31:6]    C6[31:6]    FA
-Xadder7    A[24:0]   B7#25  P6[31:7]  0  C7[29:6]    P7[31:7]    C7[31:7]    FA
-Xadder8    A[23:0]   B8#24  P7[31:8]  0  C8[29:7]    P8[31:8]    C8[31:8]    FA
-Xadder9    A[22:0]   B9#23  P8[31:9]  0  C9[29:8]    P9[31:9]    C9[31:9]    FA
-Xadder10    A[21:0]   B10#22  P9[31:10]  0  C10[29:9]    P10[31:10]    C10[31:10]    FA
-Xadder11    A[20:0]   B11#21  P10[31:11]  0  C11[29:10]    P11[31:11]    C11[31:11]    FA
-Xadder12    A[19:0]   B12#20  P11[31:12]  0  C12[29:11]    P12[31:12]    C12[31:12]    FA
-Xadder13    A[18:0]   B13#19  P12[31:13]  0  C13[29:12]    P13[31:13]    C13[31:13]    FA
-Xadder14    A[17:0]   B14#18  P13[31:14]  0  C14[29:13]    P14[31:14]    C14[31:14]    FA
-Xadder15    A[16:0]   B15#17  P14[31:15]  0  C15[29:14]    P15[31:15]    C15[31:15]    FA
-Xadder16    A[15:0]   B16#16  P15[31:16]  0  C16[29:15]    P16[31:16]    C16[31:16]    FA
-Xadder17    A[14:0]   B17#15  P16[31:17]  0  C17[29:16]    P17[31:17]    C17[31:17]    FA
-Xadder18    A[13:0]   B18#14  P17[31:18]  0  C18[29:17]    P18[31:18]    C18[31:18]    FA
-Xadder19    A[12:0]   B19#13  P18[31:19]  0  C19[29:18]    P19[31:19]    C19[31:19]    FA
-Xadder20    A[11:0]   B20#12  P19[31:20]  0  C20[29:19]    P20[31:20]    C20[31:20]    FA
-Xadder21    A[10:0]   B21#11  P20[31:21]  0  C21[29:20]    P21[31:21]    C21[31:21]    FA
-Xadder22    A[9:0]   B22#10  P21[31:22]  0  C22[29:21]    P22[31:22]    C22[31:22]    FA
-Xadder23    A[8:0]   B23#9  P22[31:23]  0  C23[29:22]    P23[31:23]    C23[31:23]    FA
-Xadder24    A[7:0]   B24#8  P23[31:24]  0  C24[29:23]    P24[31:24]    C24[31:24]    FA
-Xadder25    A[6:0]   B25#7  P24[31:25]  0  C25[29:24]    P25[31:25]    C25[31:25]    FA
-Xadder26    A[5:0]   B26#6  P25[31:26]  0  C26[29:25]    P26[31:26]    C26[31:26]    FA
-Xadder27    A[4:0]   B27#5  P26[31:27]  0  C27[29:26]    P27[31:27]    C27[31:27]    FA
-Xadder28    A[3:0]   B28#4  P27[31:28]  0  C28[29:27]    P28[31:28]    C28[31:28]    FA
-Xadder29    A[2:0]   B29#3  P28[31:29]  0  C29[29:28]    P29[31:29]    C29[31:29]    FA
-Xadder30    A[1:0]   B30#2  P29[31:30]  0  C30[29:29]    P30[31:30]    C30[31:30]    FA
-Xadder31    A[0:0]   B31#1  P30[31:31]  0    P31[31:31]    C31[31:31]    FA
-
+Xadder1    A[30:0]   B1#31  P[31:1]    C1[30:1]  0  P1[31:1]    C1[31:1]    FA
+Xadder2    A[29:0]   B2#30  P1[31:2]    C2[30:2]  0  P2[31:2]    C2[31:2]    FA
+Xadder3    A[28:0]   B3#29  P2[31:3]    C3[30:3]  0  P3[31:3]    C3[31:3]    FA
+Xadder4    A[27:0]   B4#28  P3[31:4]    C4[30:4]  0  P4[31:4]    C4[31:4]    FA
+Xadder5    A[26:0]   B5#27  P4[31:5]    C5[30:5]  0  P5[31:5]    C5[31:5]    FA
+Xadder6    A[25:0]   B6#26  P5[31:6]    C6[30:6]  0  P6[31:6]    C6[31:6]    FA
+Xadder7    A[24:0]   B7#25  P6[31:7]    C7[30:7]  0  P7[31:7]    C7[31:7]    FA
+Xadder8    A[23:0]   B8#24  P7[31:8]    C8[30:8]  0  P8[31:8]    C8[31:8]    FA
+Xadder9    A[22:0]   B9#23  P8[31:9]    C9[30:9]  0  P9[31:9]    C9[31:9]    FA
+Xadder10    A[21:0]   B10#22  P9[31:10]    C10[30:10]  0  P10[31:10]    C10[31:10]    FA
+Xadder11    A[20:0]   B11#21  P10[31:11]    C11[30:11]  0  P11[31:11]    C11[31:11]    FA
+Xadder12    A[19:0]   B12#20  P11[31:12]    C12[30:12]  0  P12[31:12]    C12[31:12]    FA
+Xadder13    A[18:0]   B13#19  P12[31:13]    C13[30:13]  0  P13[31:13]    C13[31:13]    FA
+Xadder14    A[17:0]   B14#18  P13[31:14]    C14[30:14]  0  P14[31:14]    C14[31:14]    FA
+Xadder15    A[16:0]   B15#17  P14[31:15]    C15[30:15]  0  P15[31:15]    C15[31:15]    FA
+Xadder16    A[15:0]   B16#16  P15[31:16]    C16[30:16]  0  P16[31:16]    C16[31:16]    FA
+Xadder17    A[14:0]   B17#15  P16[31:17]    C17[30:17]  0  P17[31:17]    C17[31:17]    FA
+Xadder18    A[13:0]   B18#14  P17[31:18]    C18[30:18]  0  P18[31:18]    C18[31:18]    FA
+Xadder19    A[12:0]   B19#13  P18[31:19]    C19[30:19]  0  P19[31:19]    C19[31:19]    FA
+Xadder20    A[11:0]   B20#12  P19[31:20]    C20[30:20]  0  P20[31:20]    C20[31:20]    FA
+Xadder21    A[10:0]   B21#11  P20[31:21]    C21[30:21]  0  P21[31:21]    C21[31:21]    FA
+Xadder22    A[9:0]   B22#10  P21[31:22]    C22[30:22]  0  P22[31:22]    C22[31:22]    FA
+Xadder23    A[8:0]   B23#9  P22[31:23]    C23[30:23]  0  P23[31:23]    C23[31:23]    FA
+Xadder24    A[7:0]   B24#8  P23[31:24]    C24[30:24]  0  P24[31:24]    C24[31:24]    FA
+Xadder25    A[6:0]   B25#7  P24[31:25]    C25[30:25]  0  P25[31:25]    C25[31:25]    FA
+Xadder26    A[5:0]   B26#6  P25[31:26]    C26[30:26]  0  P26[31:26]    C26[31:26]    FA
+Xadder27    A[4:0]   B27#5  P26[31:27]    C27[30:27]  0  P27[31:27]    C27[31:27]    FA
+Xadder28    A[3:0]   B28#4  P27[31:28]    C28[30:28]  0  P28[31:28]    C28[31:28]    FA
+Xadder29    A[2:0]   B29#3  P28[31:29]    C29[30:29]  0  P29[31:29]    C29[31:29]    FA
+Xadder30    A[1:0]   B30#2  P29[31:30]    C30[30:30]  0  P30[31:30]    C30[31:30]    FA
+Xadder31    A[0:0]   B31#1  P30[31:31]      0  P31[31:31]    C31[31:31]    FA
 
 Xbuf1  P11     alu[1]   buffer
 Xbuf2  P22     alu[2]   buffer
@@ -90,4 +81,86 @@ Xbuf28 P2828   alu[28]  buffer
 Xbuf29 P2929   alu[29]  buffer
 Xbuf30 P3030   alu[30]  buffer
 Xbuf31 P3131   alu[31]  buffer
+.ends
+
+// 1-bit adder
+.subckt fulladder a b ci s co
+Xxor1 a  b 1  xor2
+Xxor2 ci 1 s  xor2
+Xand1 a  b 2  and2
+Xand2 ci 1 3  and2
+Xor1  2  3 co or2
+.ends
+
+// 1-bit adder
+
+// 32 bit adder
+.subckt adder32 ALUFN[0] A[31:0] B[31:0] S[31:0] z v n
+
+// invert b
+Xor_b   B[31:0] ALUFN[0]#32 XB[31:0] xor2
+Xadder0 A[0] XB[0] ALUFN0 S[0] C0 fulladder
+Xadder  A[31:1] XB[31:1] C[30:0] S[31:1] C[31:1] fulladder
+
+// Z==1 if all=0 else 0
+Xnor1 S[3:0]   node1 nor4
+Xnor2 S[7:4]   node2 nor4
+Xnor3 S[11:8]  node3 nor4
+Xnor4 S[15:12] node4 nor4
+Xnor5 S[19:16] node5 nor4
+Xnor6 S[23:20] node6 nor4
+Xnor7 S[27:24] node7 nor4
+Xnor8 S[31:28] node8 nor4
+Xand1 node1 node2 node3 node4 out1 and4
+Xand2 node5 node6 node7 node8 out2 and4
+Xand3 out1 out2 z and2
+
+// V addition overflows
+Xinva A[31] Ainv inverter_2
+Xinvb XB[31] Binv inverter_2
+Xinvs S[31] Sinv inverter_2
+Xand4 A[31] XB[31] Sinv out3 and3
+Xand5 Ainv Binv S[31] out4 and3
+Xor1  out3 out4 v or2
+
+// N negative or not
+Xbuffer S[31] n buffer
+.ends
+
+
+.subckt boole32 ALUFN[3:0] A[31:0] B[31:0] boole[31:0]
+Xmux A[31:0] B[31:0] ALUFN[0]#32 ALUFN[1]#32 ALUFN[2]#32 ALUFN[3]#32 boole[31:0] mux4
+.ends
+
+// 32-bit comparator
+.subckt compare32 ALUFN[2:1] z v n cmp[31:0]
+.connect cmp[31:1] 0
+Xxor n v 1 xor2
+Xor  1 z 2 or2
+Xmux ALUFN[1] AlUFN[2] 0 z 1 2 cmp[0] mux4
+.ends
+
+.subckt leftshifter A[31:0] B[4:0] in SL[31:0]
+Xmux1 B[4]#32 A[31:0] A[15:0] in#16 W[31:0]  mux2
+Xmux2 B[3]#32 W[31:0] W[23:0] in#8  X[31:0]  mux2
+Xmux3 B[2]#32 X[31:0] X[27:0] in#4  Y[31:0]  mux2
+Xmux4 B[1]#32 Y[31:0] Y[29:0] in#2  Z[31:0]  mux2
+Xmux5 B[0]#32 Z[31:0] Z[30:0] in#1  SL[31:0] mux2
+.ends
+
+.subckt shift32 ALUFN[1:0] A[31:0] B[4:0] shift[31:0]
+Xand   A[31] ALUFN[1] fill and2
+Xleft  A[31:0] B[4:0] 0    left[31:0]  leftshifter
+Xright A[0:31] B[4:0] fill right[0:31] leftshifter
+Xmux   ALUFN[0]#32 left[31:0] right[31:0] shift[31:0] mux2
+.ends
+
+.subckt alu ALUFN[5:0] A[31:0] B[31:0] alu[31:0] z v n
+Xadder ALUFN[0]   A[31:0] B[31:0] adder[31:0] z v n adder32
+Xboole ALUFN[3:0] A[31:0] B[31:0] boole[31:0] boole32
+Xshift ALUFN[1:0] A[31:0] B[4:0]  shift[31:0] shift32
+Xcmp   ALUFN[2:1] z       v       n         cmp[31:0] compare32
+Xmux1  A[31:0] B[31:0] mult[31:0] multiply
+Xmux2  ALUFN[1]#32 adder[31:0] mult[31:0] arith[31:0] mux2
+Xmux3  ALUFN[4]#32 ALUFN[5]#32 adder[31:0] boole[31:0] shift[31:0] cmp[31:0] alu[31:0] mux4
 .ends
