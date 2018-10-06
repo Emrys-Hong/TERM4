@@ -1,0 +1,80 @@
+.include "../50002/nominal.jsim"
+.include "../50002/stdcell.jsim"
+.include "../50002/lab3checkoff_6.jsim"
+
+// 1-bit adder
+.subckt fulladder a b ci s co
+Xxor1 a  b 1  xor2
+Xxor2 ci 1 s  xor2
+Xand1 a  b 2  and2
+Xand2 ci 1 3  and2
+Xor1  2  3 co or2
+.ends
+
+// 32 bit adder
+.subckt adder32 ALUFN[0] A[31:0] B[31:0] S[31:0] z v n
+
+// invert b
+Xor_b   B[31:0] ALUFN[0]#32 XB[31:0] xor2
+Xadder0 A[0] XB[0] ALUFN0 S[0] C0 fulladder
+Xadder  A[31:1] XB[31:1] C[30:0] S[31:1] C[31:1] fulladder
+
+// Z==1 if all=0 else 0
+Xnor1 S[3:0]   node1 nor4
+Xnor2 S[7:4]   node2 nor4
+Xnor3 S[11:8]  node3 nor4
+Xnor4 S[15:12] node4 nor4
+Xnor5 S[19:16] node5 nor4
+Xnor6 S[23:20] node6 nor4
+Xnor7 S[27:24] node7 nor4
+Xnor8 S[31:28] node8 nor4
+Xand1 node1 node2 node3 node4 out1 and4
+Xand2 node5 node6 node7 node8 out2 and4
+Xand3 out1 out2 z and2
+
+// V addition overflows
+Xinva A[31] Ainv inverter_2
+Xinvb XB[31] Binv inverter_2
+Xinvs S[31] Sinv inverter_2
+Xand4 A[31] XB[31] Sinv out3 and3
+Xand5 Ainv Binv S[31] out4 and3
+Xor1  out3 out4 v or2
+
+// N negative or not
+Xbuffer S[31] n buffer
+.ends
+
+.subckt boole32 ALUFN[3:0] A[31:0] B[31:0] boole[31:0]
+Xmux A[31:0] B[31:0] ALUFN[0]#32 ALUFN[1]#32 ALUFN[2]#32 ALUFN[3]#32 boole[31:0] mux4
+.ends
+
+// 32-bit comparator
+.subckt compare32 ALUFN[2:1] z v n cmp[31:0]
+.connect cmp[31:1] 0
+Xxor n v 1 xor2
+Xor  1 z 2 or2
+Xmux ALUFN[1] AlUFN[2] 0 z 1 2 cmp[0] mux4
+.ends
+
+.subckt leftshifter A[31:0] B[4:0] in SL[31:0]
+Xmux1 B[4]#32 A[31:0] A[15:0] in#16 W[31:0]  mux2
+Xmux2 B[3]#32 W[31:0] W[23:0] in#8  X[31:0]  mux2
+Xmux3 B[2]#32 X[31:0] X[27:0] in#4  Y[31:0]  mux2
+Xmux4 B[1]#32 Y[31:0] Y[29:0] in#2  Z[31:0]  mux2
+Xmux5 B[0]#32 Z[31:0] Z[30:0] in#1  SL[31:0] mux2
+.ends
+
+.subckt shift32 ALUFN[1:0] A[31:0] B[4:0] shift[31:0]
+Xand   A[31] ALUFN[1] fill and2
+Xleft  A[31:0] B[4:0] 0    left[31:0]  leftshifter
+Xright A[0:31] B[4:0] fill right[0:31] leftshifter
+Xmux   ALUFN[0]#32 left[31:0] right[31:0] shift[31:0] mux2
+.ends
+
+.subckt alu ALUFN[5:0] A[31:0] B[31:0] alu[31:0] z v n
+Xadder ALUFN[0]   A[31:0] B[31:0] adder[31:0] z v n adder32
+Xboole ALUFN[3:0] A[31:0] B[31:0] boole[31:0] boole32
+Xshift ALUFN[1:0] A[31:0] B[4:0]  shift[31:0] shift32
+Xcmp   ALUFN[2:1] z       v       n         cmp[31:0] compare32
+Xmux   ALUFN[4]#32 ALUFN[5]#32 adder[31:0] boole[31:0] shift[31:0] cmp[31:0] alu[31:0] mux4
+.ends

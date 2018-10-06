@@ -1,0 +1,11 @@
+.include "../50002/nominal.jsim"
+.include "../50002/stdcell.jsim"
+.include "../50002/lab3compare.jsim"
+
+// 32-bit comparator
+.subckt compare32 ALUFN[2:1] z v n cmp[31:0]
+.connect cmp[31:1] 0
+Xxor n v 1 xor2
+Xor  1 z 2 or2
+Xmux ALUFN[1] AlUFN[2] 0 z 1 2 cmp[0] mux4
+.ends

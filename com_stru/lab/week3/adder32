@@ -1,0 +1,45 @@
+.include "../50002/nominal.jsim"
+.include "../50002/stdcell.jsim"
+.include "../50002/lab3adder.jsim"
+
+// 1-bit adder
+.subckt fulladder a b ci s co
+Xxor1 a  b 1  xor2
+Xxor2 ci 1 s  xor2
+Xand1 a  b 2  and2
+Xand2 ci 1 3  and2
+Xor1  2  3 co or2
+.ends
+
+// 32 bit adder
+.subckt adder32 ALUFN[0] A[31:0] B[31:0] S[31:0] z v n
+
+// invert b
+Xor_b   B[31:0] ALUFN[0]#32 XB[31:0] xor2
+Xadder0 A[0] XB[0] ALUFN0 S[0] C0 fulladder
+Xadder  A[31:1] XB[31:1] C[30:0] S[31:1] C[31:1] fulladder
+
+// Z==1 if all=0 else 0
+Xnor1 S[3:0]   node1 nor4
+Xnor2 S[7:4]   node2 nor4
+Xnor3 S[11:8]  node3 nor4
+Xnor4 S[15:12] node4 nor4
+Xnor5 S[19:16] node5 nor4
+Xnor6 S[23:20] node6 nor4
+Xnor7 S[27:24] node7 nor4
+Xnor8 S[31:28] node8 nor4
+Xand1 node1 node2 node3 node4 out1 and4
+Xand2 node5 node6 node7 node8 out2 and4
+Xand3 out1 out2 z and2
+
+// V addition overflows
+Xinva A[31] Ainv inverter_2
+Xinvb XB[31] Binv inverter_2
+Xinvs S[31] Sinv inverter_2
+Xand4 A[31] XB[31] Sinv out3 and3
+Xand5 Ainv Binv S[31] out4 and3
+Xor1  out3 out4 v or2
+
+// N negative or not
+Xbuffer S[31] n buffer
+.ends

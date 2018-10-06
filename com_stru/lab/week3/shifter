@@ -1,0 +1,18 @@
+.include "../50002/nominal.jsim"
+.include "../50002/stdcell.jsim"
+.include "../50002/lab3shifter.jsim"
+
+.subckt leftshifter A[31:0] B[4:0] in SL[31:0]
+Xmux1 B[4]#32 A[31:0] A[15:0] in#16 W[31:0]  mux2
+Xmux2 B[3]#32 W[31:0] W[23:0] in#8  X[31:0]  mux2
+Xmux3 B[2]#32 X[31:0] X[27:0] in#4  Y[31:0]  mux2
+Xmux4 B[1]#32 Y[31:0] Y[29:0] in#2  Z[31:0]  mux2
+Xmux5 B[0]#32 Z[31:0] Z[30:0] in#1  SL[31:0] mux2
+.ends
+
+.subckt shift32 ALUFN[1:0] A[31:0] B[4:0] shift[31:0]
+Xand   A[31] ALUFN[1] fill and2
+Xleft  A[31:0] B[4:0] 0    left[31:0]  leftshifter
+Xright A[0:31] B[4:0] fill right[0:31] leftshifter
+Xmux   ALUFN[0]#32 left[31:0] right[31:0] shift[31:0] mux2
+.ends
